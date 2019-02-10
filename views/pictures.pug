@@ -1,0 +1,22 @@
+doctype html
+html(lang="ru")
+    head
+        title Картины
+        link(rel='stylesheet' type='text/css' href="/stylesheets/style.min.css")
+    body
+        div(class="header")
+            h1 Картины
+        div(class="menu")
+            a(class="button_menu" href="/") Аукционы
+        div(class="main")
+            div(class="pictures_list")
+                - for (let picture of pictures)
+                    div(class="picture_card")
+                        div(class="img_container" style=`background-image: url("${picture.url}");`)
+                        div(class="infoblock")
+                            P <b>Название:</b> #{picture.name} 
+                            p <b>Автор:</b> #{picture.author}
+                            p <b>Описание:</b> #{picture.info}
+                        div(class="picture_control_buttons")
+                            a(class="button_" href=`/picture/${picture.id}`) Страница картины
+

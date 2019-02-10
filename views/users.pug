@@ -1,0 +1,57 @@
+doctype html
+html(lang="ru")
+    head
+        title Участники аукциона ${auction.id}
+        link(rel="stylesheet" href="/stylesheets/style.min.css")
+    body
+        div(class="header")
+            h1 Участники аукциона ${auction.id}
+        div(class="menu")
+            a(class="button_menu" href=`/auction/${auction.id}`)
+            a(class="button_menu" href="/") Аукционы
+            a(class="button_menu" href="/pictures") Картины
+            a(class="button_menu" id="add_user_button") Добавить участника
+            a(class="button_menu" id="del_user_button") Удалить участника
+
+        div(class="main")
+            div(class="picture_card")
+                table
+                    thead
+                        tr
+                            th ID
+                            th ФИО
+                            th Бюджет
+                    tbody
+                        - for (let user of auction.users)
+                            tr
+                                td #{user.id}
+                                td #{user.fio}
+                                td #{user.money}
+        
+
+        div(class="modal" id="del_user")
+            div(class="modal-content" style="height: 210px")
+                h2 Удалить участника
+                form(type="hidden" action=`/delete_user/${auction.id}` method="POST")
+                    p <i>ID участника</i>
+                    br
+                    input(type="text" name="user_id")
+                    div(class="row" style="float: right")
+                        button(class="button_ col" type="submit" style="border: none; margin: 15px; height: 35px; width: 210px;") Удалить
+                        span(class="button_ col" id="user_reset_button" style="margin: 15px; width: 200px;") Отмена
+
+                    
+        div(class="modal" id="add_user")
+            div(class="modal-content")
+                h2 Добавить участника
+                form(id='add_user_form' action='/add_user/'+auction.id method="POST")
+                    p <i>ФИО:</i>
+                    input(type="text" name="fio")
+                    br
+                    p <i>Бюджет:</i>
+                    input(type="text" name="money")
+                    br
+                    button(class="button_" type="submit" style="width: 200px; height: 40px; float: right; border: none;") Добавить
+
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js")
+        script(src="../javascripts/main.min.js" type="text/javascript")

@@ -1,0 +1,75 @@
+doctype html
+html
+    head
+        title Картина
+        link(rel="stylesheet" href="/stylesheets/style.min.css")
+    body
+        div(class="header")
+            h1 Карточка картины
+        div(class="menu")
+            a(class="button_menu" href="/pictures") Картины
+            a(class="button_menu" href="/") Аукционы
+            a(class="button_menu" id="edit_button") Редактировать
+            if (picture.is_free == "true")
+                a(class="button_menu" id="add_button") Добавить в аукцион
+            else
+                a(class="button_menu" id="del_button") Удалить из аукциона
+        div(class="picture_card")
+            div(class="image")
+                img(src=picture.url)
+            div(class="info")
+                p <b>ID:</b> #{picture.id}
+                p <b>Название:</b> #{picture.name}
+                p <b>Автор:</b> #{picture.author}
+                p <b>Описание:</b> #{picture.info}
+                p <b>Начальная стоимость:</b> #{picture.start_price}
+                p <b>Минимальный шаг:</b> #{picture.min_increment}
+                p <b>Максимальный шаг:</b> #{picture.max_increment}
+                if (picture.is_free=="true")
+                    p(class="important") Не участвует в аукционах
+                    //button()
+                else
+                    p(class="important") Участвует в аукционе #{picture.auction_id}
+
+        div(class="modal" id="del_picture")
+            div(class="modal-content" style="height: 210px")
+                h2 Удалить из аукциона
+                p Вы уверены, что хотите удалить картину из аукциона?
+                form(type="hidden" action=`/delete_picture/${picture.id}` method="POST")
+                    div(class="row" style="float: right")
+                        button(class="button_ col" type="submit" style="border: none; margin: 15px; height: 35px; width: 210px;") Удалить
+                        span(class="button_ col" id="reset_button" style="margin: 15px; width: 200px;") Отмена
+
+        div(class="modal" id="add_picture")
+            div(class="modal-content")
+                h2 Добавить в аукцион
+                form(id='add_form' action=`/add_picture/${picture.id}` method="POST")
+                    input(type="text" name="auction_id")
+                    button(class="button_" type="submit" style="float: right; border: none;") Добавить
+
+        div(class="modal" id="edit_picture")
+            div(class="modal-content")
+                h2 Редактирование картины
+                form(id='edit_form' action='/edit_picture/'+picture.id method="POST")
+                    p <i>Название</i>
+                    input(type="text" name="name" value=picture.name)
+                    br
+                    p <i>Автор</i>
+                    input(type="text" name="author" value=picture.author)
+                    br
+                    p <i>Описание</i>
+                    input(type="text" name="info" value=picture.info)
+                    br
+                    p <i>Стартовая цена</i>
+                    input(type="text" name="start_price" value=picture.start_price)
+                    br
+                    p <i>Минимальный шаг</i>
+                    input(type="text" name="min_increment" value=picture.min_increment)
+                    br
+                    p <i>Максимальный шаг</i>
+                    input(type="text" name="max_increment" value=picture.max_increment)
+                    br
+                    button(class="button_" type="submit" style="width: 200px; height: 40px; float: right; border: none;") Изменить
+
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js")
+        script(src="../javascripts/main.min.js" type="text/javascript")

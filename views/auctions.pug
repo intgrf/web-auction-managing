@@ -1,0 +1,65 @@
+doctype html
+html(lang="ru")
+    head
+        title Аукционы
+        link(rel="stylesheet" href="/stylesheets/style.min.css")
+    body
+        div(class="header")
+            h1 Аукционы
+        div(class="menu")
+            a(class="button_menu" href="/pictures") Картины
+            a(class="button_menu" id="add_auc_button") Добавить аукцион
+            a(class="button_menu" id="del_auc_button") Удалить аукцион
+        div(class="main")
+            div(class="picture_card")
+                table
+                    thead
+                        tr
+                            th ID
+                            th Дата
+                            th Время
+                            th Ссылка
+                    tbody
+                        - for (let auction of auctions)
+                            tr
+                                td #{auction.id}
+                                td #{auction.date}
+                                td #{auction.time}
+                                td 
+                                    a(href=`/auction/${auction.id}`) -->
+
+        div(class="modal" id="del_auction")
+            div(class="modal-content" style="height: 210px")
+                h2 Удалить аукцион
+                form(action=`/delete_auction/${auction_id}` method="POST")
+                    p <i>ID аукциона</i>
+                    br
+                    input(type="text" name="auction_id")
+                    div(class="row" style="float: right")
+                        button(class="button_ col" type="submit" style="border: none; margin: 15px; height: 35px; width: 210px;") Удалить
+                        span(class="button_ col" id="auc_reset_button" style="margin: 15px; width: 200px;") Отмена
+
+
+        div(class="modal" id="add_auction")
+            div(class="modal-content")
+                h2 Добавление аукциона
+                form(id='add_auc_form' action='/add_auction/' method="POST")
+                    p <i>Дата:</i>
+                    input(type="date" name="date")
+                    br
+                    p <i>Время:</i>
+                    input(type="time" name="time")
+                    br
+                    p <i>Таймаут:</i>
+                    input(type="text" name="timeout")
+                    br
+                    p <i>Интервал:</i>
+                    input(type="text" name="interval")
+                    br
+                    p <i>Пауза:</i>
+                    input(type="text" name="pause")
+                    br
+                    button(class="button_" type="submit" style="width: 200px; height: 40px; float: right; border: none;") Добавить
+
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js")
+        script(src="../javascripts/main.min.js" type="text/javascript")

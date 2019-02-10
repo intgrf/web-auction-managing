@@ -1,0 +1,47 @@
+doctype html
+html
+    head
+        title Аукцион 
+        link(rel="stylesheet" href="/stylesheets/style.min.css")
+    body
+        div(class="header")
+            h1 Карточка аукциона
+        div(class="menu")
+            a(class="button_menu" href="/pictures") Картины
+            a(class="button_menu" href="/") Аукционы
+            a(class="button_menu" id="edit_auc_button") Редактировать
+            a(class="button_menu" href=`/users/${auction.id}`) Участники
+
+        div(class="picture_card")
+            div(class="info")
+                p <b>ID:</b> #{auction.id}
+                p <b>Дата:</b> #{auction.date}
+                p <b>Время:</b> #{auction.time}
+                p <b>Таймаут продажи картины:</b> #{auction.timeout}
+                p <b>Интервал времени отсчёта:</b> #{auction.interval}
+                p <b>Пауза:</b> #{auction.pause}
+              
+
+        div(class="modal" id="edit_auction")
+            div(class="modal-content")
+                h2 Редактирование аукциона
+                form(id='edit_auc_form' action='/edit_auction/'+auction.id method="POST")
+                    p <i>Дата:</i>
+                    input(type="date" name="date" value=auction.date)
+                    br
+                    p <i>Время:</i>
+                    input(type="time" name="time" value=auction.time)
+                    br
+                    p <i>Таймаут:</i>
+                    input(type="text" name="timeout" value=auction.timeout)
+                    br
+                    p <i>Интервал:</i>
+                    input(type="text" name="interval" value=auction.interval)
+                    br
+                    p <i>Пауза:</i>
+                    input(type="text" name="pause" value=auction.pause)
+                    br
+                    button(class="button_" type="submit" style="width: 200px; height: 40px; float: right; border: none;") Изменить
+
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js")
+        script(src="../javascripts/main.min.js" type="text/javascript")
